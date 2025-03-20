@@ -1,0 +1,43 @@
+.scores-container {
+    max-width: 800px;
+    margin: 100px auto 20px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    text-align: center;
+}
+
+.scores-container h2 {
+    color: #00bcd4;
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th, td {
+    border: 1px solid white;
+    padding: 10px;
+    text-align: center;
+}
+
+th {
+    background: #00bcd4;
+    color: black;
+}
+
+td {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    th, td {
+        padding: 8px;
+        font-size: 14px;
+    }
+}

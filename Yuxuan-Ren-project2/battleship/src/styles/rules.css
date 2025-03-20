@@ -1,0 +1,49 @@
+.rules-container {
+    max-width: 800px;
+    margin: 100px auto 20px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    text-align: left;
+}
+
+.rules-container h2, h3 {
+    color: #00bcd4;
+}
+
+.rules-container ul {
+    list-style: disc;
+    margin-left: 20px;
+}
+
+.rules-container table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.rules-container th, .rules-container td {
+    border: 1px solid white;
+    padding: 10px;
+    text-align: center;
+}
+
+.rules-container th {
+    background: #00bcd4;
+    color: black;
+}
+
+.rules-container td {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.rules-container a {
+    color: #00bcd4;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.rules-container a:hover {
+    text-decoration: underline;
+}
