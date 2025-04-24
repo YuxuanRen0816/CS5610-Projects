@@ -1,0 +1,144 @@
+/* Common Pattern */
+body {
+    font-family: 'Orbitron', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #0a0f1e;
+    color: white;
+    text-align: center;
+}
+
+/* Navigation Bar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 50px;
+    background-color: rgba(0, 0, 0, 0.8);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+/* Navigation Links */
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-links li {
+    white-space: nowrap;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    padding: 10px 15px;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover, .nav-links .active {
+    color: #00bcd4;
+}
+
+/* Game Page */
+.game-container {
+    margin-top: 80px; /* To prevent overlap with navbar */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Board Style */
+.board {
+    display: grid;
+    grid-template-columns: repeat(10, 40px);
+    grid-template-rows: repeat(10, 40px);
+    gap: 3px;
+    background-color: #1e293b;
+    padding: 10px;
+    border-radius: 8px;
+    margin: 20px auto;
+    box-shadow: 0px 0px 10px rgba(0, 188, 212, 0.5);
+}
+
+.board-row {
+    display: flex;
+}
+
+/* Cell Style */
+.cell {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Unselected Cell */
+.cell.miss {
+    background-color: #334155;
+}
+
+/* Selected Hit Cell */
+.cell.hit {
+    background-color: #ef4444;
+}
+
+/* Hover Effect */
+.cell:hover {
+    background-color: #475569;
+}
+
+/* Timer */
+.timer {
+    font-size: 20px;
+    margin: 10px 0;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+}
+
+/* Buttons */
+button {
+    font-size: 18px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin: 10px;
+}
+
+button:hover {
+    background: #00bcd4;
+    color: white;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .game-container {
+        flex-direction: column;
+    }
+
+    .board {
+        grid-template-columns: repeat(10, 30px);
+        grid-template-rows: repeat(10, 30px);
+    }
+
+    .cell {
+        width: 30px;
+        height: 30px;
+    }
+}
