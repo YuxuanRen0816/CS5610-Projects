@@ -1,0 +1,64 @@
+.board {
+  display: grid;
+  grid-template-columns: repeat(10, 35px);
+  grid-template-rows: repeat(10, 35px);
+  gap: 3px;
+  margin: 10px;
+}
+
+.cell {
+  width: 35px;
+  height: 35px;
+  background-color: #1e293b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  border-radius: 4px;
+  user-select: none;
+  transition: background-color 0.2s;
+}
+
+.cell.hit {
+  background-color: #ef4444; /* red for hit */
+}
+
+.cell.miss {
+  background-color: #334155; /* gray for miss */
+}
+
+.cell.ship {
+  background-color: #22c55e; /* green for ship, only visible to self */
+}
+
+.cell:hover {
+  background-color: #475569;
+}
+
+/* .board {
+    display: inline-block;
+    margin: 10px;
+  }
+  .board-row {
+    display: flex;
+  }
+  .cell {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+  }
+  .cell.hit {
+    background-color: red;
+  }
+  .cell.miss {
+    background-color: lightblue;
+  }
+  .cell.ship {
+    background-color: gray;
+  }
+  .cell:hover {
+    background-color: #eee;
+  }
+   */

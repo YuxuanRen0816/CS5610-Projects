@@ -1,60 +1,92 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Routes, NavLink } from "react-router-dom";
-import Home from "./pages/Home";
-import GamePage from "./pages/Game";  // 确保引入 GamePage
+import { BrowserRouter as Router, Routes, Route, Navigate, NavLink } from "react-router-dom";
+import LandingPage from "./pages/LandingPage";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
+import GamePage from "./pages/GamesPage";
+import GamesPage from "./pages/GamesPage";
+import HighScoresPage from "./pages/HighScoresPage";
 import Rules from "./pages/Rules";
-import HighScores from "./pages/HighScores";
-import { GameProvider } from "./context/GameContext";
+import { AuthProvider, useAuth } from "./utils/AuthContext";
 import "./styles/common.css";
 import "./styles/game.css";
 import "./styles/index.css";
 import "./styles/rules.css";
 import "./styles/scores.css";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import Navbar from "./components/Navbar";
+
+function PrivateRoute({ children }) {
+  const { user } = useAuth();
+  return user ? children : <Navigate to="/login" />;
+}
+
+// function Navbar() {
+//   const { user, logout } = useAuth();
+//   const navigate = useNavigate(); // for redirect
+
+//   const handleLogout = async () => {
+//     await logout();
+//   };
+
+//   const handleNewGame = async () => {
+//     try {
+//       const res = await axios.post("/api/games/new", {}, { withCredentials: true });
+//       const newGameId = res.data.gameId;
+//       navigate(`/game/${newGameId}`);
+//     } catch (err) {
+//       console.error("Failed to create new game:", err);
+//     }
+//   };
+
+//   return (
+//     <nav className="navbar">
+//       <div className="nav-container">
+//         <h1 className="logo">Battleship</h1>
+//         <ul className="nav-links">
+//           <li><NavLink to="/" className={({ isActive }) => isActive ? "active" : ""}>Home</NavLink></li>
+//           <li><NavLink to="/games" className={({ isActive }) => isActive ? "active" : ""}>All Games</NavLink></li>
+//           <li><NavLink to="/high-scores" className={({ isActive }) => isActive ? "active" : ""}>Scores</NavLink></li>
+//           <li><NavLink to="/rules" className={({ isActive }) => isActive ? "active" : ""}>Rules</NavLink></li>
+//           {user ? (
+//             <>
+//               <li><button onClick={handleNewGame} className="new-game-btn">New Game</button></li>
+//               <li><span className="username">{user.username}</span></li>
+//               <li><button onClick={handleLogout} className="logout-btn">Sign Out</button></li>
+//             </>
+//           ) : (
+//             <>
+//               <li><NavLink to="/login" className={({ isActive }) => isActive ? "active" : ""}>Login</NavLink></li>
+//               <li><NavLink to="/register" className={({ isActive }) => isActive ? "active" : ""}>Register</NavLink></li>
+//             </>
+//           )}
+//         </ul>
+//       </div>
+//     </nav>
+//   );
+// }
 
 function App() {
   return (
-    <GameProvider>
+    <AuthProvider>
       <Router>
-        <nav className="navbar">
-          <div className="nav-container">
-            <h1 className="logo">Battleship</h1>
-            <ul className="nav-links">
-              <li>
-                <NavLink to="/" className={({ isActive }) => (isActive ? "active" : "")}>
-                  Home
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/game/normal" className={({ isActive }) => (isActive ? "active" : "")}>
-                  Game
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/rules" className={({ isActive }) => (isActive ? "active" : "")}>
-                  Rules
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/highscores" className={({ isActive }) => (isActive ? "active" : "")}>
-                  Scores
-                </NavLink>
-              </li>
-            </ul>
-          </div>
-        </nav>
+        <Navbar />
         <div className="main-content">
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/game/:mode" element={<GamePage />} />
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/games" element={<GamesPage />} />
+            <Route path="/high-scores" element={<HighScoresPage />} />
             <Route path="/rules" element={<Rules />} />
-            <Route path="/highscores" element={<HighScores />} />
+            <Route path="/game/:gameId" element={<PrivateRoute><GamePage /></PrivateRoute>} />
           </Routes>
         </div>
         <footer>
           <p>&copy; 2025 Battleship. All rights reserved.</p>
         </footer>
       </Router>
-    </GameProvider>
+    </AuthProvider>
   );
 }
 

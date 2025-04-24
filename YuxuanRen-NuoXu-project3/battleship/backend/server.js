@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 
 // Import routes
 const authRoutes = require('./routes/auth');
+const gameRoutes = require('./routes/games');
 
 // Load environment variables
 dotenv.config();
@@ -21,12 +22,13 @@ app.use(express.json());
 app.use(cookieParser());
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/battleship')
+mongoose.connect(process.env.MONGODB_URI || 'mongodb+srv://yuxren0816:RENyuXUAN799520@cluster0.2yhbygq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
     .then(() => console.log('Connected to MongoDB'))
     .catch(err => console.error('MongoDB connection error:', err));
 
 // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/games', gameRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
