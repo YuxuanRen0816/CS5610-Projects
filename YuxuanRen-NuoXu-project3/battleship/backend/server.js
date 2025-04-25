@@ -14,10 +14,21 @@ dotenv.config();
 const app = express();
 
 // Middleware
-app.use(cors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:3000',
-    credentials: true
-}));
+// app.use(cors({
+//     origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+//     credentials: true
+// }));
+const allowedOrigins = [
+    "http://localhost:3000",
+    "https://cs5610-projects3-yuxuanren-nuoxu-frontend.onrender.com",
+];
+
+app.use(
+cors({
+    origin: allowedOrigins,
+    credentials: true,
+})
+);
 app.use(express.json());
 app.use(cookieParser());
 
