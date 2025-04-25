@@ -1,25 +1,61 @@
-import { BrowserRouter as Router, Routes, Route, Navigate, NavLink } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
-import GamePage from "./pages/GamesPage";
 import GamesPage from "./pages/GamesPage";
+import GamePlay from "./pages/GamePlay";
 import HighScoresPage from "./pages/HighScoresPage";
 import Rules from "./pages/Rules";
+import Navbar from "./components/Navbar";
 import { AuthProvider, useAuth } from "./utils/AuthContext";
+import { GameProvider } from "./context/GameContext";
 import "./styles/common.css";
 import "./styles/game.css";
 import "./styles/index.css";
 import "./styles/rules.css";
 import "./styles/scores.css";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import Navbar from "./components/Navbar";
 
 function PrivateRoute({ children }) {
   const { user } = useAuth();
   return user ? children : <Navigate to="/login" />;
 }
+
+function App() {
+  return (
+    <AuthProvider>
+      <Router>
+        <Navbar />
+        <div className="main-content">
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/games" element={<GamesPage />} />
+            <Route path="/high-scores" element={<HighScoresPage />} />
+            <Route path="/rules" element={<Rules />} />
+
+            <Route
+              path="/game/:gameId"
+              element={
+                <PrivateRoute>
+                  <GameProvider>
+                    <GamePlay />
+                  </GameProvider>
+                </PrivateRoute>
+              }
+            />
+          </Routes>
+        </div>
+        <footer>
+          <p>&copy; 2025 Battleship. All rights reserved.</p>
+        </footer>
+      </Router>
+    </AuthProvider>
+  );
+}
+
+export default App;
+
 
 // function Navbar() {
 //   const { user, logout } = useAuth();
@@ -65,29 +101,3 @@ function PrivateRoute({ children }) {
 //     </nav>
 //   );
 // }
-
-function App() {
-  return (
-    <AuthProvider>
-      <Router>
-        <Navbar />
-        <div className="main-content">
-          <Routes>
-            <Route path="/" element={<LandingPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
-            <Route path="/games" element={<GamesPage />} />
-            <Route path="/high-scores" element={<HighScoresPage />} />
-            <Route path="/rules" element={<Rules />} />
-            <Route path="/game/:gameId" element={<PrivateRoute><GamePage /></PrivateRoute>} />
-          </Routes>
-        </div>
-        <footer>
-          <p>&copy; 2025 Battleship. All rights reserved.</p>
-        </footer>
-      </Router>
-    </AuthProvider>
-  );
-}
-
-export default App;

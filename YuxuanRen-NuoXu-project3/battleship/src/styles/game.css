@@ -22,15 +22,12 @@
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
 }
 
-h3 {
-    margin-bottom: 10px;
-}
-
-.grid {
+.board-grid {
     display: grid;
     grid-template-columns: repeat(10, 40px);
     grid-template-rows: repeat(10, 40px);
     gap: 2px;
+    margin: 0 auto;
 }
 
 .cell {
@@ -50,19 +47,23 @@ h3 {
     background: rgba(255, 255, 255, 0.5);
 }
 
-.hit {
+.cell.hit {
     background: lightgreen;
     color: white;
 }
 
-.miss {
+.cell.miss {
     background: lightpink;
     color: white;
 }
 
-.ship .black-dot {
+.cell.ship .black-dot {
     font-size: 22px;
     color: black;
+}
+
+.cell.ship {
+    background-color: #22c55e;
 }
 
 .restart-btn {
@@ -78,4 +79,8 @@ h3 {
 
 .restart-btn:hover {
     background: #0288d1;
+}
+
+h3 {
+    margin-bottom: 10px;
 }

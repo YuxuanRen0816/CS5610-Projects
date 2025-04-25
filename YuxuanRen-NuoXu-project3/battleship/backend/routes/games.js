@@ -84,4 +84,60 @@ router.post("/new", authMiddleware, async (req, res) => {
   }
 });
 
+// PUT /api/games/:gameId/fire
+router.put("/:gameId/fire", authMiddleware, async (req, res) => {
+  try {
+    const { gameId } = req.params;
+    const { x, y } = req.body;
+    const username = req.user.username;
+
+    const game = await Game.findById(gameId);
+    if (!game) return res.status(404).json({ message: "Game not found" });
+
+    if (game.status !== "Active") {
+      return res.status(400).json({ message: "Game is not active" });
+    }
+
+    if (game.currentTurn !== username) {
+      return res.status(403).json({ message: "Not your turn" });
+    }
+
+    const isPlayer1 = game.player1 === username;
+    const targetBoard = isPlayer1 ? game.board2 : game.board1;
+
+    const targetCell = targetBoard[x][y];
+    if (targetCell === "hit" || targetCell === "miss") {
+      return res.status(400).json({ message: "You already fired there" });
+    }
+
+    if (targetCell === "ship") {
+      targetBoard[x][y] = "hit";
+    } else {
+      targetBoard[x][y] = "miss";
+    }
+
+    // Check win condition
+    const hasRemainingShips = targetBoard.some(row => row.includes("ship"));
+    if (!hasRemainingShips) {
+      game.status = "Completed";
+      game.winner = username;
+    } else {
+      game.currentTurn = isPlayer1 ? game.player2 : game.player1; // Switch turns
+    }
+
+    if (isPlayer1) {
+      game.board2 = targetBoard;
+    } else {
+      game.board1 = targetBoard;
+    }
+
+    await game.save();
+    res.json({ message: "Move recorded" });
+  } catch (err) {
+    console.error("Error in /fire:", err);
+    res.status(500).json({ message: "Internal error" });
+  }
+});
+
+
 module.exports = router;
